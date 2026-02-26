@@ -1,0 +1,40 @@
+{
+  "name" : "wonji-job-0226",
+  "jobMode" : "VISUAL",
+  "description" : "",
+  "role" : "arn:aws:iam::107721656423:role/wonji-glue-visual-etl",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-107721656423-us-east-1/scripts/wonji-job-0226.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-107721656423-us-east-1/sparkHistoryLogs/",
+    "--enable-job-insights" : "true",
+    "--enable-observability-metrics" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-107721656423-us-east-1/temporary/"
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 10,
+  "timeout" : 480,
+  "maxCapacity" : 10.0,
+  "glueVersion" : "5.0",
+  "numberOfWorkers" : 10,
+  "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
+  "codeGenConfigurationNodes" : "{\"node-1772102631584\":{\"S3GlueParquetTarget\":{\"AutoDataQuality\":{\"EvaluationContext\":\"EvaluateDataQuality_node1772102227308\",\"IsEnabled\":true},\"Compression\":\"snappy\",\"Inputs\":[\"node-1772102620295\"],\"Name\":\"Amazon S3\",\"NumberTargetPartitions\":\"0\",\"PartitionKeys\":[],\"Path\":\"s3://wonji-amazon-sales-virginia/csv-to-parquet/\",\"SchemaChangePolicy\":{\"EnableUpdateCatalog\":false}}},\"node-1772102898775\":{\"EvaluateDataQualityMultiFrame\":{\"AdditionalDataSources\":{},\"AdditionalOptions\":{\"observations.scope\":\"ALL\",\"performanceTuning.caching\":\"CACHE_NOTHING\"},\"Inputs\":[\"node-1772102620295\"],\"Name\":\"wonji-evaluate-data-quality-0226\",\"PublishingOptions\":{\"CloudWatchMetricsEnabled\":true,\"ResultsPublishingEnabled\":true,\"ResultsS3Prefix\":\"\"},\"Ruleset\":\"# Example rules: Completeness \\\"colA\\\" between 0.4 and 0.8, ColumnCount > 10\\nRules = [\\n    Completeness \\\"product_id\\\" = 1.0,\\n    \\n    ColumnValues \\\"rating\\\" between 0.9 and 5.1,\\n    \\n    ColumnValues \\\"discounted_price\\\" > 0,\\n    \\n    ColumnCount = 8\\n]\",\"StopJobOnFailureOptions\":{}}},\"node-1772103894775\":{\"SelectFromCollection\":{\"Index\":0,\"Inputs\":[\"node-1772102898775\"],\"Name\":\"ruleOutcomes\"}},\"node-1772102229711\":{\"CatalogSource\":{\"Database\":\"amazon_sales_db\",\"Name\":\"AWS Glue Data Catalog\",\"PartitionPredicate\":\"\",\"Table\":\"wonji_amazon_sales_virginia\"}},\"node-1772102620295\":{\"ApplyMapping\":{\"Inputs\":[\"node-1772102229711\"],\"Mapping\":[{\"Dropped\":false,\"FromPath\":[\"order_id\"],\"FromType\":\"long\",\"ToKey\":\"order_id\",\"ToType\":\"long\"},{\"Dropped\":false,\"FromPath\":[\"order_date\"],\"FromType\":\"string\",\"ToKey\":\"order_date\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"product_id\"],\"FromType\":\"long\",\"ToKey\":\"product_id\",\"ToType\":\"long\"},{\"Dropped\":false,\"FromPath\":[\"product_category\"],\"FromType\":\"string\",\"ToKey\":\"product_category\",\"ToType\":\"string\"},{\"Dropped\":true,\"FromPath\":[\"price\"],\"FromType\":\"double\",\"ToKey\":\"price\",\"ToType\":\"double\"},{\"Dropped\":true,\"FromPath\":[\"discount_percent\"],\"FromType\":\"long\",\"ToKey\":\"discount_percent\",\"ToType\":\"long\"},{\"Dropped\":true,\"FromPath\":[\"quantity_sold\"],\"FromType\":\"long\",\"ToKey\":\"quantity_sold\",\"ToType\":\"long\"},{\"Dropped\":false,\"FromPath\":[\"customer_region\"],\"FromType\":\"string\",\"ToKey\":\"customer_region\",\"ToType\":\"string\"},{\"Dropped\":true,\"FromPath\":[\"payment_method\"],\"FromType\":\"string\",\"ToKey\":\"payment_method\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"rating\"],\"FromType\":\"double\",\"ToKey\":\"rating\",\"ToType\":\"double\"},{\"Dropped\":true,\"FromPath\":[\"review_count\"],\"FromType\":\"long\",\"ToKey\":\"review_count\",\"ToType\":\"long\"},{\"Dropped\":false,\"FromPath\":[\"discounted_price\"],\"FromType\":\"double\",\"ToKey\":\"discounted_price\",\"ToType\":\"double\"},{\"Dropped\":false,\"FromPath\":[\"total_revenue\"],\"FromType\":\"double\",\"ToKey\":\"total_revenue\",\"ToType\":\"double\"}],\"Name\":\"wonji-schema-0226\"}},\"node-1772103902370\":{\"SelectFromCollection\":{\"Index\":0,\"Inputs\":[\"node-1772102898775\"],\"Name\":\"rowLevelOutcomes\"}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "aws-glue",
+    "branch" : "main",
+    "folder" : "wonji-job-0226"
+  }
+}
